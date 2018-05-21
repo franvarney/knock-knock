@@ -77,7 +77,10 @@ const KnockKnock = require('knock-knock')
 
 const server = new Hapi.Server()
 
+// < v17
 const ping = (request, reply) => KnockKnock(reply)
+// >= 17
+const ping = async () => await util.promisify(KnockKnock)()
 
 server.route([
   { method: 'GET', path: '/ping', handler: ping }
